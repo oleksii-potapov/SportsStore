@@ -18,7 +18,7 @@ namespace SportsStore.WebUI.Controllers
             _repository = repository;
         }
 
-        public ActionResult List(int page = 1)
+        public ViewResult List(int page = 1)
         {
             return View(_repository.Products
                 .OrderBy(p => p.ProductId)
