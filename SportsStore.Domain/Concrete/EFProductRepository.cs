@@ -8,7 +8,7 @@ using SportsStore.Domain.Entities;
 
 namespace SportsStore.Domain.Concrete
 {
-    internal class EFProductRepository : IProductRepository
+    public class EFProductRepository : IProductRepository
     {
         private readonly EFDbContext _context = new EFDbContext();
         public IEnumerable<Product> Products => _context.Products;
