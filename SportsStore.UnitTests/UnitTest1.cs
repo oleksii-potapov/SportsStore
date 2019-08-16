@@ -98,5 +98,33 @@ namespace SportsStore.UnitTests
             Assert.AreEqual(pagingInfo.TotalItems, 5);
             Assert.AreEqual(pagingInfo.TotalPages, 2);
         }
+
+        [TestMethod]
+        public void Can_Filter_Products()
+        {
+            // Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductId = 1, Name="P1", Category = "Cat1"},
+                new Product {ProductId = 2, Name="P2", Category = "Cat2"},
+                new Product {ProductId = 3, Name="P3", Category = "Cat1"},
+                new Product {ProductId = 4, Name="P4", Category = "Cat2"},
+                new Product {ProductId = 5, Name="P5", Category = "Cat1"},
+            });
+
+            //Arrange
+            ProductController controller = new ProductController(mock.Object);
+            controller.PageSize = 3;
+
+            // Act
+            ProductsListViewModel model = (ProductsListViewModel)controller.List("Cat1", 1).Model;
+
+            //Assert
+            Assert.AreEqual("P1", model.Products.ElementAt(0).Name);
+            Assert.AreEqual("P3", model.Products.ElementAt(1).Name);
+            Assert.AreEqual("P5", model.Products.ElementAt(2).Name);
+            Assert.AreEqual(3, model.Products.Count());
+        }
     }
 }
