@@ -126,5 +126,30 @@ namespace SportsStore.UnitTests
             Assert.AreEqual("P5", model.Products.ElementAt(2).Name);
             Assert.AreEqual(3, model.Products.Count());
         }
+
+        [TestMethod]
+        public void Can_Create_Categories()
+        {
+            // Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductId = 1, Name="P1", Category = "Cat1"},
+                new Product {ProductId = 5, Name="P5", Category = "Cat3"},
+                new Product {ProductId = 2, Name="P2", Category = "Cat2"},
+                new Product {ProductId = 3, Name="P3", Category = "Cat1"},
+                new Product {ProductId = 4, Name="P4", Category = "Cat2"},
+            });
+            NavController controller = new NavController(mock.Object);
+
+            // Act
+            var categories = (IEnumerable<string>)controller.Menu().Model;
+
+            // Assert
+            Assert.AreEqual(3, categories.Count());
+            Assert.AreEqual("Cat1", categories.ElementAt(0));
+            Assert.AreEqual("Cat2", categories.ElementAt(1));
+            Assert.AreEqual("Cat3", categories.ElementAt(2));
+        }
     }
 }
