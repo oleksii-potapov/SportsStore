@@ -69,5 +69,34 @@ namespace SportsStore.UnitTests
                 @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">2</a>" +
                 @"<a class=""btn btn-default"" href=""Page3"">3</a>", result.ToString());
         }
+
+        [TestMethod]
+        public void Can_Send_Pagination_View_Model()
+        {
+            // Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductId = 1, Name="P1"},
+                new Product {ProductId = 2, Name="P2"},
+                new Product {ProductId = 3, Name="P3"},
+                new Product {ProductId = 4, Name="P4"},
+                new Product {ProductId = 5, Name="P5"},
+            });
+
+            // Arrange
+            ProductController controller = new ProductController(mock.Object);
+            controller.PageSize = 3;
+
+            // Act
+            ProductsListViewModel model = (ProductsListViewModel)controller.List(2).Model;
+
+            // Assert
+            PagingInfo pagingInfo = model.PagingInfo;
+            Assert.AreEqual(pagingInfo.CurrentPage, 2);
+            Assert.AreEqual(pagingInfo.ItemsPerPage, 3);
+            Assert.AreEqual(pagingInfo.TotalItems, 5);
+            Assert.AreEqual(pagingInfo.TotalPages, 2);
+        }
     }
 }
