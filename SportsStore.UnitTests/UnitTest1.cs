@@ -155,15 +155,40 @@ namespace SportsStore.UnitTests
         [TestMethod]
         public void Indicates_Selected_Category()
         {
-            // Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] {
                 new Product {ProductId = 1, Name = "P1", Category = "Apples"},
                 new Product {ProductId = 4, Name = "P2", Category = "Oranges"},
-            });            NavController controller = new NavController(mock.Object);
+            });
+            NavController controller = new NavController(mock.Object);
             string categorySelected = "Apples";
             string result = controller.Menu(categorySelected).ViewBag.SelectedCategory;
             Assert.AreEqual(categorySelected, result);
+        }
+
+        [TestMethod]
+        public void Generate_Category_Specific_Product_Count()
+        {
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductId = 1, Name="P1", Category = "Cat1"},
+                new Product {ProductId = 5, Name="P5", Category = "Cat3"},
+                new Product {ProductId = 2, Name="P2", Category = "Cat2"},
+                new Product {ProductId = 3, Name="P3", Category = "Cat1"},
+                new Product {ProductId = 4, Name="P4", Category = "Cat2"},
+            });
+            ProductController controller = new ProductController(mock.Object);
+
+            var cat1 = (ProductsListViewModel)controller.List(category: "Cat1").Model;
+            var cat2 = (ProductsListViewModel)controller.List(category: "Cat2").Model;
+            var cat3 = (ProductsListViewModel)controller.List(category: "Cat3").Model;
+            var catAll = (ProductsListViewModel)controller.List(category: null).Model;
+
+            Assert.AreEqual(2, cat1.PagingInfo.TotalItems);
+            Assert.AreEqual(2, cat2.PagingInfo.TotalItems);
+            Assert.AreEqual(1, cat3.PagingInfo.TotalItems);
+            Assert.AreEqual(5, catAll.PagingInfo.TotalItems);
         }
     }
 }
