@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SportsStore.Domain.Entities
 {
-    internal class ShippingDetails
+    public class ShippingDetails
     {
         [Required(ErrorMessage = "Please enter your name")]
         public string Name { get; set; }
