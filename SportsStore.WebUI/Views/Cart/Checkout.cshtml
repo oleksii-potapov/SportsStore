@@ -16,34 +16,17 @@
     </div>
 
     <h3>Address:</h3>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Line1, "Line1:")
-        @Html.TextBoxFor(x => x.Line1, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Line2, "Line2:")
-        @Html.TextBoxFor(x => x.Line2, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Line3, "Line3:")
-        @Html.TextBoxFor(x => x.Line3, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.City, "City:")
-        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.State, "State:")
-        @Html.TextBoxFor(x => x.State, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Zip, "Zip:")
-        @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Country, "Country:")
-        @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
-    </div>
+    foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        {
+            <div class="form-group">
+                @Html.Label(property.PropertyName)
+                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+            </div>
+        }
+    }
+
     <h3>Options</h3>
     <div class="form-group">
         Gift wrap these items @Html.CheckBoxFor(x => x.GiftWrap)
