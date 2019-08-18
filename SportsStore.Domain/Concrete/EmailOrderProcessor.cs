@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -31,6 +32,8 @@ namespace SportsStore.Domain.Concrete
 
                 if (_settings.WriteAsFile)
                 {
+                    if (!Directory.Exists(_settings.FileLocation))
+                        Directory.CreateDirectory(_settings.FileLocation);
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
                     smtpClient.PickupDirectoryLocation = _settings.FileLocation;
                     smtpClient.EnableSsl = false;
