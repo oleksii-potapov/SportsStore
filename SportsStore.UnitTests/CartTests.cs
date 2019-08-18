@@ -97,7 +97,7 @@ namespace SportsStore.UnitTests
             }.AsQueryable());
 
             Cart cart = new Cart();
-            CartController cartController = new CartController(mock.Object);
+            CartController cartController = new CartController(mock.Object, null);
 
             cartController.AddToCart(cart, 1, null);
 
@@ -115,7 +115,7 @@ namespace SportsStore.UnitTests
             }.AsQueryable());
 
             Cart cart = new Cart();
-            var target = new CartController(mock.Object);
+            var target = new CartController(mock.Object, null);
 
             RedirectToRouteResult result = target.AddToCart(cart, 1, "myUrl");
 
@@ -127,7 +127,7 @@ namespace SportsStore.UnitTests
         public void Can_View_Cart_Contents()
         {
             var cart = new Cart();
-            var target = new CartController(null);
+            var target = new CartController(null, null);
             var result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
 
             Assert.AreSame(result.Cart, cart);
