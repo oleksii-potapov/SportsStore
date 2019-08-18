@@ -21,7 +21,7 @@
         if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
         {
             <div class="form-group">
-                @Html.Label(property.PropertyName)
+                @Html.Label(property.DisplayName ?? property.PropertyName)
                 @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
             </div>
         }
