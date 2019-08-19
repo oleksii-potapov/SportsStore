@@ -1,0 +1,22 @@
+﻿@model IEnumerable<string>
+@{
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+}
+<div data-role="navbar">
+    <ul>
+        @foreach (var item in Model)
+        {
+            @Html.RouteLink(item, new
+           {
+           controller = "Product",
+           action = "List",
+           category = item,
+           page = 1
+            }, new
+            {
+                data_transition = "fade",
+                @class = (item == ViewBag.SelectedCategory ? "ui-btn-active" : null)
+            })
+        }
+    </ul>
+</div>
