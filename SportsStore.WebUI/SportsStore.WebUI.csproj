@@ -429,6 +429,7 @@
     <Content Include="Scripts\jquery.mobile-1.4.5.min.map" />
     <Content Include="Views\Nav\FlexMenu.Mobile.cshtml" />
     <Content Include="Views\Shared\ProductSummary.Mobile.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
