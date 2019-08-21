@@ -40,6 +40,8 @@ namespace SportsStore.Domain.Concrete
                 tempProduct.Description = product.Description;
                 tempProduct.Price = product.Price;
                 tempProduct.Category = product.Category;
+                tempProduct.ImageData = product.ImageData;
+                tempProduct.ImageMimeType = product.ImageMimeType;
             }
             _context.SaveChanges();
         }
