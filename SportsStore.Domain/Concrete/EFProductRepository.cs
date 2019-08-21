@@ -13,6 +13,17 @@ namespace SportsStore.Domain.Concrete
         private readonly EFDbContext _context = new EFDbContext();
         public IEnumerable<Product> Products => _context.Products;
 
+        public Product DeleteProduct(int productId)
+        {
+            var product = _context.Products.Find(productId);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+            }
+            return product;
+        }
+
         public void SaveProduct(Product product)
         {
             if (product.ProductId == 0)
